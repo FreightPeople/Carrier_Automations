@@ -1,7 +1,7 @@
 import time 
 from carriers.tfm import Tfm
 from carriers.sadleris import Sadleirs 
-
+from carriers.border import Border
 import pyodbc
 from configparser import ConfigParser
 from datetime import datetime
@@ -67,6 +67,19 @@ def initiateSadleirs(cursor,conn):
 
     filename = sadleirs.GetRecordsToPublish(cursor)
     upload_file(filename, server, username, password, remote_path)
+
+def initiateBorderHistory(cursor, conn):
+    border = Border(cursor,conn)
+    selenium_border = border.login()
+    consignments = border.process_history(selenium_border)
+    added_count = 0
+    # Assuming consignments_list contains your extracted consignments
+    for consignment in consignments:  # Using a copy to avoid modifying the list during iteration
+       if border.add_record_to_db(cursor, consignment):
+            added_count += 1
+    print(f"Total consignments added: {added_count}")
+    border.run_stored_procedure_history(cursor)
+    border.close_browser(selenium_border)
 
 def initiateTfmTimeslots(cursor, conn):
     # Establish the database connection
@@ -140,4 +153,9 @@ if __name__ == "__main__":
     initiateTfmTimeslots(cursor, conn)
     initiateSadleirs(cursor, conn)
     conn.close()
+    conn = pyodbc.connect(SCTconnection_string)
+    cursor = conn.cursor()
+    initiateBorderHistory(cursor,conn)
+    conn.close()
+
     
