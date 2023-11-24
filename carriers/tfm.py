@@ -48,7 +48,7 @@ class Tfm:
     def delete_records(self, cursor):
         # Implement the code to retrieve the next record without the date from the database
         
-        quiet_batch_process_logger.info(f"TFM: Retrieving recordsfrom DB...")
+        quiet_batch_process_logger.info(f"TFM: Deleting recordsfrom DB...")
         print('TFM: Deleting recordsfrom DB...')
 
         try:

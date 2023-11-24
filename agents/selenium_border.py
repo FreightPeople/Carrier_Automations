@@ -211,7 +211,7 @@ class SeleniumBorder:
            
             content_frame = self.driver.find_element(By.ID,'legacy-iframe')
             self.driver.switch_to.frame(content_frame)
-
+            time.sleep(1)
             # Find the first row inside the table
             selection = self.driver.find_element(By.ID, "pnl-instruct")
             

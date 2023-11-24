@@ -168,6 +168,20 @@ class Border:
     #         self.conn.rollback()
     #         quiet_batch_process_logger.error(f"Sadleirs: Error : {e}")
 
+    def delete_records(self, cursor):
+        # Implement the code to retrieve the next record without the date from the database
+        
+        quiet_batch_process_logger.info(f"TFM: Deleting recordsfrom DB...")
+        print('TFM: Deleting recordsfrom DB...')
+
+        try:
+            query = f"DELETE FROM [dbo].[tmp_BorderTimeslots]"
+            cursor.execute(query)
+            self.conn.commit()
+        except Exception as e:
+            print(e)
+            quiet_batch_process_logger.error(f"TFM: Error : {e}")
+
     def run_stored_procedure_history(self, cursor):
         try:
 
