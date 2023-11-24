@@ -175,7 +175,7 @@ class SeleniumBorder:
         self.quiet_batch_process_logger.info(f"Starting search for Connote : {connote}")
         print(f"Starting search for Connote : {connote}")
 
-        search_url = os.environ['BEX_SEARCH_URL']
+        search_url = 'https://bexonline.borderexpress.com.au/bxo/legacy/connote/details/'
 
         try:
     
