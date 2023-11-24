@@ -2,6 +2,7 @@ from agents.selenium_border import SeleniumBorder
 from datetime import datetime
 import pandas as pd
 from automation_logger import quiet_batch_process_logger
+import os
 
 class Border:
 
@@ -12,7 +13,7 @@ class Border:
         self.cursor = cursor
        
 
-    url = "https://login.borderexpress.com.au/Account/Login"  # Update with your URL
+    url = os.environ['BEX_LOGIN_URL']  # Update with your URL
 
     def retrieve_records(self, cursor):
         # Implement the code to retrieve the next record without the date from the database
@@ -32,27 +33,22 @@ class Border:
             quiet_batch_process_logger.error(f"Border: Error : {e}")
 
     def add_record_to_db(self, cursor, consignment_data):
-
         consignment_number, consignment_date = consignment_data
-
         # Check if consignment already exists
         query =f"SELECT COUNT(*) FROM [dbo].[BorderDeliveryDates] WHERE [Consignment Number] = '{consignment_number}'"
 
         cursor.execute(query)
         
         count = cursor.fetchone()[0]
-        print(f"Border: Found {count} records for consignment {consignment_number}")
+        #print(f"Border: Found {count} records for consignment {consignment_number}")
 
         # If not found, insert the new consignment
         if count == 0:
-            if not consignment_date:
-                print("Consignment date is null or empty!")
-            else:
-                query2 =f"INSERT INTO [dbo].[BorderDeliveryDates] ([Consignment Number], [Date Signed]) VALUES ('{consignment_number}', '{consignment_date}')"
-                cursor.execute(query2)
-                self.conn.commit()  # Commit the transaction to save the changes
-                print(f"Border: Added consignment {consignment_number} to database")
-                return True
+            query2 =f"INSERT INTO [dbo].[BorderDeliveryDates] ([Consignment Number], [Date Signed]) VALUES ('{consignment_number}', '{consignment_date}')"
+            cursor.execute(query2)
+            self.conn.commit()  # Commit the transaction to save the changes
+            #print(f"Border: Added consignment {consignment_number} to database")
+            return True
         return False  # Indicates that a consignment was not added
 
 

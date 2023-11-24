@@ -2,7 +2,7 @@ from agents.selenium_sadliers import SeleniumSadliers  # Import your SeleniumTGE
 from datetime import datetime
 import pandas as pd
 from automation_logger import quiet_batch_process_logger
-
+import os
 class Sadleirs:
 
     def __init__(self, cursor, conn):
@@ -11,7 +11,7 @@ class Sadleirs:
         self.cursor = cursor
        
 
-    url = "https://portal.sadleirs.com.au/fr8portal/account/consignments"  # Update with your URL
+    url = os.environ['SADLEIRS_LOGIN_URL'] 
 
     def retrieve_records(self, cursor):
         # Implement the code to retrieve the next record without the date from the database

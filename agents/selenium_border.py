@@ -6,7 +6,7 @@ from selenium.webdriver.firefox.options import Options
 import datetime
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+import os 
 class SeleniumBorder:
 
     connote=''
@@ -34,17 +34,16 @@ class SeleniumBorder:
 
         try:
             username_textfield = self.driver.find_element(By.NAME,'Username')
-            username_textfield.send_keys('pickups@freightpeople.com.au')
+            username_textfield.send_keys(os.environ['BEX_USERNAME'])
 
             password_textfield = self.driver.find_element(By.NAME,'Password')
-            password_textfield.send_keys('PeopleFreight22')
+            password_textfield.send_keys(os.environ['BEX_PASSWORD'])
             
             time.sleep(3)
 
             login_button = self.driver.find_element(By.ID,'button')
             login_button.click()
             
-            # redirect_url = 'https://bexonline.borderexpress.com.au'
             
             # self.driver.get(redirect_url)
             # time.sleep(3)
@@ -58,7 +57,7 @@ class SeleniumBorder:
     def fetch_connotes_from_history(self):
         time.sleep(3)
         self.quiet_batch_process_logger.info(f"Starting process")
-        history_url = 'https://bexonline.borderexpress.com.au/bxo/legacy/connote'
+        history_url = os.environ['BEX_HISTORY_URL']
         try:
             self.driver.get(history_url)
             time.sleep(3)
@@ -68,7 +67,7 @@ class SeleniumBorder:
             self.quiet_batch_process_logger.error(f"Error : {err}")
             print(f"Error : {err}")
         end_month = datetime.date.today()
-        start_month = end_month - datetime.timedelta(days=75)
+        start_month = end_month - datetime.timedelta(days=60)
         current_date = start_month
         all_consignments = []
 
@@ -95,15 +94,18 @@ class SeleniumBorder:
             self.driver.switch_to.frame(content_frame)
             from_date_field = self.driver.find_element(By.ID,'From')
             from_date_field.clear()
+            time.sleep(2)
             from_date_field.send_keys(start_date)
+            time.sleep(2)
+
             to_date_field = self.driver.find_element(By.ID,'To')
 
 
             to_date_field.clear()
 
-
+            time.sleep(2)
             to_date_field.send_keys(end_date)
-
+            time.sleep(2)
             self.quiet_batch_process_logger.info(f"Dates and times entered")
             print(f"Dates and times entered")
             search_button = self.driver.find_element(By.ID,'btn-search')
@@ -173,7 +175,7 @@ class SeleniumBorder:
         self.quiet_batch_process_logger.info(f"Starting search for Connote : {connote}")
         print(f"Starting search for Connote : {connote}")
 
-        search_url = 'https://bexonline.borderexpress.com.au/bxo/legacy/connote/details/'
+        search_url = os.environ['BEX_SEARCH_URL']
 
         try:
     

@@ -6,7 +6,7 @@ from selenium.webdriver.firefox.options import Options
 import datetime
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+import os
 class SeleniumTfm:
      
      
@@ -31,18 +31,18 @@ class SeleniumTfm:
 
         try:
             username_textfield = self.driver.find_element(By.NAME,'Username')
-            username_textfield.send_keys('FREPPL')
-
+            username_textfield.send_keys(os.environ['TFM_USERNAME'])
+            time.sleep(1)
             password_textfield = self.driver.find_element(By.NAME,'Password')
-            password_textfield.send_keys('FREPPL')
-            
-            time.sleep(3)
+            password_textfield.send_keys(os.environ['TFM_PASSWORD'])
+
+            time.sleep(1)
 
             login_button = self.driver.find_element(By.NAME,'button')
             login_button.click()
             
-            # redirect_url = 'https://bexonline.borderexpress.com.au'
-            
+            time.sleep(3)
+
             # self.driver.get(redirect_url)
             # time.sleep(3)
 

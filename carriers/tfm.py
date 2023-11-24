@@ -2,14 +2,14 @@ from agents.selenium_tfm import SeleniumTfm
 from datetime import datetime
 import pandas as pd
 from automation_logger import quiet_batch_process_logger
-
+import os
 class Tfm:
 
     def __init__(self,cursor,conn):
         self.conn = conn
         self.cursor = cursor
 
-    url = "http://www.ezyfms.com/tfm/index.asp?act=disallow"
+    url = os.environ['TFM_LOGIN_URL']  
 
     def login(self):
          # Initialize your SeleniumBorder class with the connote value

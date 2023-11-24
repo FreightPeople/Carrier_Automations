@@ -75,7 +75,11 @@ def initiateBorderHistory(cursor, conn):
     added_count = 0
     # Assuming consignments_list contains your extracted consignments
     for consignment in consignments:  # Using a copy to avoid modifying the list during iteration
-       if border.add_record_to_db(cursor, consignment):
+        consignment_number, consignment_date = consignment
+        if not consignment_date:
+            print(consignment_number + " - date is null or empty!")
+            continue 
+        if border.add_record_to_db(cursor, consignment):
             added_count += 1
     print(f"Total consignments added: {added_count}")
     border.run_stored_procedure_history(cursor)
