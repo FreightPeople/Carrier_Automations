@@ -1,8 +1,7 @@
 name: Python Selenium CI
 
-on:
-  schedule:
-    - cron: '00 23 * * *'
+on: push
+
 
 jobs:
   build:
