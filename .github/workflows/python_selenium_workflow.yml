@@ -38,5 +38,17 @@ jobs:
         FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
         FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
         FTP_REMOTE_PATH: ${{ secrets.FTP_REMOTE_PATH }}
+        BEX_HISTORY_URL: ${{ secrets.BEX_HISTORY_URL }}
+        BEX_LOGIN_URL: ${{ secrets.BEX_LOGIN_URL }}
+        BEX_PASSWORD: ${{ secrets.BEX_PASSWORD }}
+        BEX_SEARCH_URL: ${{ secrets.BEX_SEARCH_URL }}
+        BEX_USERNAME: ${{ secrets.BEX_USERNAME }}
+        SADLEIRS_LOGIN_URL: ${{ secrets.SADLEIRS_LOGIN_URL }}
+        SADLEIRS_PASSWORD: ${{ secrets.SADLEIRS_PASSWORD }}
+        SADLEIRS_USERNAME: ${{ secrets.SADLEIRS_USERNAME }}
+        TFM_LOGIN_URL: ${{ secrets.TFM_LOGIN_URL }}
+        TFM_PASSWORD: ${{ secrets.TFM_PASSWORD }}
+        TFM_USERNAME: ${{ secrets.TFM_USERNAME }}
+
 
        
