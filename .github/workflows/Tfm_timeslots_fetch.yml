@@ -3,6 +3,7 @@ name: Tfm Timeslots Automation
 on: 
   schedule:
     - cron: '00 23 * * *'  # Runs at 11 PM UTC, around 9-10 AM AEST depending upon DST
+  workflow_dispatch:
 
 jobs:
   build:

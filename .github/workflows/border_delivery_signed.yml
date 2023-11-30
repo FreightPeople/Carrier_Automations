@@ -3,7 +3,8 @@ name: Border_delivery_signed_automation
 on:
   schedule:
     - cron: '00 12 * * *' # 12:00 UTC every day
-
+  workflow_dispatch:
+    
 jobs:
   build:
     runs-on: windows-latest
