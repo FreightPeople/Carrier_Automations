@@ -210,15 +210,16 @@ def upload_file(file_name, server, username, password, remote_path):
 
 if __name__ == "__main__":
     # Establish the database connection
-    conn = pyodbc.connect(FMSconnection_string)
-    cursor = conn.cursor()
-    initiateTfmTimeslots(cursor, conn)
-    initiateSadleirs(cursor, conn)
+    print('test push')
+    #conn = pyodbc.connect(FMSconnection_string)
+    #cursor = conn.cursor()
+    #initiateTfmTimeslots(cursor, conn)
+    #initiateSadleirs(cursor, conn)
     #initiateBorderTimeslots(cursor,conn)
-    conn.close()
-    conn = pyodbc.connect(SCTconnection_string)
-    cursor = conn.cursor()
-    initiateBorderHistory(cursor,conn)
-    conn.close()
+    #conn.close()
+    #conn = pyodbc.connect(SCTconnection_string)
+    #cursor = conn.cursor()
+    #initiateBorderHistory(cursor,conn)
+    #conn.close()
 
     
