@@ -1,0 +1,43 @@
+name: Tfm Timeslots Automation
+
+on: 
+  schedule:
+    - cron: '00 23 * * *'  # Runs at 11 PM UTC, around 9-10 AM AEST depending upon DST
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'  # This will use the latest version of Python 3
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Set up Firefox
+      uses: browser-actions/setup-firefox@latest
+
+    - name: Run tfm timeslot script
+      run: python TFM_Timeslots.py
+      env:
+        FMS_SERVER: ${{ secrets.FMS_SERVER }}
+        FMS_DATABASE: ${{ secrets.FMS_DATABASE }}
+        FMS_USERNAME: ${{ secrets.FMS_USERNAME }}
+        FMS_PASSWORD: ${{ secrets.FMS_PASSWORD }}
+        FTP_SERVER: ${{ secrets.FTP_SERVER }}
+        FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+        FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        FTP_REMOTE_PATH: ${{ secrets.FTP_REMOTE_PATH }}
+        TFM_LOGIN_URL: ${{ secrets.TFM_LOGIN_URL }}
+        TFM_PASSWORD: ${{ secrets.TFM_PASSWORD }}
+        TFM_USERNAME: ${{ secrets.TFM_USERNAME }}
+
+
+       

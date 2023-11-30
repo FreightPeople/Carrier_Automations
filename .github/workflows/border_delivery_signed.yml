@@ -1,0 +1,45 @@
+name: Border_delivery_signed_automation
+
+on:
+  schedule:
+    - cron: '00 12 * * *' # 12:00 UTC every day
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'  # This will use the latest version of Python 3
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Set up Firefox
+      uses: browser-actions/setup-firefox@latest
+
+    - name: Run border script
+      run: python border_delivered_signed.py
+      env:
+        SCT_SERVER: ${{ secrets.SCT_SERVER }}
+        SCT_DATABASE: ${{ secrets.SCT_DATABASE }}
+        SCT_USERNAME: ${{ secrets.SCT_USERNAME }}
+        SCT_PASSWORD: ${{ secrets.SCT_PASSWORD }}
+        FTP_SERVER: ${{ secrets.FTP_SERVER }}
+        FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+        FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        FTP_REMOTE_PATH: ${{ secrets.FTP_REMOTE_PATH }}
+        BEX_HISTORY_URL: ${{ secrets.BEX_HISTORY_URL }}
+        BEX_LOGIN_URL: ${{ secrets.BEX_LOGIN_URL }}
+        BEX_PASSWORD: ${{ secrets.BEX_PASSWORD }}
+        BEX_SEARCH_URL: ${{ secrets.BEX_SEARCH_URL }}
+        BEX_USERNAME: ${{ secrets.BEX_USERNAME }}
+
+
+       
