@@ -117,6 +117,8 @@ def initiateBorderTimeslots(cursor, conn):
                 print('Border Date: ',datetimeval[0])
                 print('Border Time: ',datetimeval[1])
                 booking_list.append((connote,(datetimeval[0],datetimeval[1])))
+    border.close_browser(selenium_border)
+
     csv_data = []
     if(booking_list):
         for barcode, times in booking_list:
@@ -138,7 +140,6 @@ def initiateBorderTimeslots(cursor, conn):
                     writer.writerows(csv_data)
     upload_file(filename, server, username, password, remote_path)
 
-    border.close_browser(selenium_border)
 
     #border.GetRecordsToPublish(cursor)
     
