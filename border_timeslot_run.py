@@ -43,42 +43,46 @@ def initiateBorderTimeslots(cursor, conn):
     tempflagcheck = False
     booking_list = []
     selenium_border = border.login()
-    for connote in records_to_process:
-        print('Border: Processing : ', connote)
-        if connote:
-            
-            quiet_batch_process_logger.info(f"Border: Starting process for Con : {connote}")
-            datetimeval  = border.process_record(selenium_border,connote)
-            
-            if datetimeval is not None and all(val not in (None, '') for val in datetimeval):
-                #border.save_record(cursor, connote, datetimeval[0], datetimeval[1])
-                #print('Border: ',connote)
-                #print('Border Date: ',datetimeval[0])
-                #print('Border Time: ',datetimeval[1])
-                booking_list.append((connote,(datetimeval[0],datetimeval[1])))
-                print('Added connote and timeslot to booking list' + connote + '-' + datetimeval[0] + '-' + datetimeval[1])
-    #border.close_browser(selenium_border)
-    csv_data = []
-    if(booking_list):
-        for barcode, times in booking_list:
-            for date_str, time_str in times:
-                        # Parse date and time
-                timeslot_date = datetime.strptime(date_str, '%d/%m/%Y')
-                timeslot_time = datetime.strptime(time_str, '%I:%M %p')
+    try:
+        for connote in records_to_process:
+            print('Border: Processing : ', connote)
+            if connote:
+                
+                quiet_batch_process_logger.info(f"Border: Starting process for Con : {connote}")
+                datetimeval  = border.process_record(selenium_border,connote)
+                
+                if datetimeval is not None and all(val not in (None, '') for val in datetimeval):
+                    #border.save_record(cursor, connote, datetimeval[0], datetimeval[1])
+                    #print('Border: ',connote)
+                    #print('Border Date: ',datetimeval[0])
+                    #print('Border Time: ',datetimeval[1])
+                    booking_list.append((connote,(datetimeval[0],datetimeval[1])))
+                    print('Added connote and timeslot to booking list' + connote + '-' + datetimeval[0] + '-' + datetimeval[1])
+        #border.close_browser(selenium_border)
+        csv_data = []
+        if(booking_list):
+            for barcode, times in booking_list:
+                for date_str, time_str in times:
+                            # Parse date and time
+                    timeslot_date = datetime.strptime(date_str, '%d/%m/%Y')
+                    timeslot_time = datetime.strptime(time_str, '%I:%M %p')
 
-                            # Format date and time (remove leading zeros for Windows compatibility)
-                formatted_date = timeslot_date.strftime('%m/%d/%Y').lstrip("0").replace("/0", "/")
-                formatted_time = timeslot_time.strftime('%H:%M')
+                                # Format date and time (remove leading zeros for Windows compatibility)
+                    formatted_date = timeslot_date.strftime('%m/%d/%Y').lstrip("0").replace("/0", "/")
+                    formatted_time = timeslot_time.strftime('%H:%M')
 
-                csv_data.append([barcode, formatted_date, formatted_time, "", "BOOKEDIN", "", ""])
-                    # Write CSV file
-                filename = f"BorderTimeslots_{datetime.now().strftime('%Y-%m-%d_%H%M%S')}.csv"
-                with open(filename, 'w', newline='') as file:
-                    writer = csv.writer(file)
-                    writer.writerow(['Barcode', 'Date', 'Time', 'UserID', 'ScanType', 'Location', 'Extra Info'])
-                    writer.writerows(csv_data)
-        upload_file(filename, server, username, password, remote_path)
-    border.delete_records(cursor)
+                    csv_data.append([barcode, formatted_date, formatted_time, "", "BOOKEDIN", "", ""])
+                        # Write CSV file
+                    filename = f"BorderTimeslots_{datetime.now().strftime('%Y-%m-%d_%H%M%S')}.csv"
+                    with open(filename, 'w', newline='') as file:
+                        writer = csv.writer(file)
+                        writer.writerow(['Barcode', 'Date', 'Time', 'UserID', 'ScanType', 'Location', 'Extra Info'])
+                        writer.writerows(csv_data)
+            upload_file(filename, server, username, password, remote_path)
+        border.delete_records(cursor)
+    except Exception as e:
+        print(f"Error: {e}")
+        raise
     #border.GetRecordsToPublish(cursor)
     
        
