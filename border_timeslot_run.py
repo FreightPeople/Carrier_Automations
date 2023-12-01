@@ -73,11 +73,11 @@ def initiateBorderTimeslots(cursor, conn):
 
                     csv_data.append([barcode, formatted_date, formatted_time, "", "BOOKEDIN", "", ""])
                         # Write CSV file
-                    filename = f"BorderTimeslots_{datetime.now().strftime('%Y-%m-%d_%H%M%S')}.csv"
-                    with open(filename, 'w', newline='') as file:
-                        writer = csv.writer(file)
-                        writer.writerow(['Barcode', 'Date', 'Time', 'UserID', 'ScanType', 'Location', 'Extra Info'])
-                        writer.writerows(csv_data)
+            filename = f"BorderTimeslots_{datetime.now().strftime('%Y-%m-%d_%H%M%S')}.csv"
+            with open(filename, 'w', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow(['Barcode', 'Date', 'Time', 'UserID', 'ScanType', 'Location', 'Extra Info'])
+                writer.writerows(csv_data)
             upload_file(filename, server, username, password, remote_path)
         border.delete_records(cursor)
     except Exception as e:
