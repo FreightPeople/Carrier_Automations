@@ -61,17 +61,17 @@ def initiateBorderTimeslots(cursor, conn):
         #border.close_browser(selenium_border)
         csv_data = []
         if(booking_list):
-            for barcode, times in booking_list:
-                for date_str, time_str in times:
+            for barcode, (date_str, time_str) in booking_list:
+                
                             # Parse date and time
-                    timeslot_date = datetime.strptime(date_str, '%d/%m/%Y')
-                    timeslot_time = datetime.strptime(time_str, '%I:%M %p')
+                timeslot_date = datetime.strptime(date_str, '%d/%m/%Y')
+                timeslot_time = datetime.strptime(time_str, '%I:%M %p')
 
                                 # Format date and time (remove leading zeros for Windows compatibility)
-                    formatted_date = timeslot_date.strftime('%m/%d/%Y').lstrip("0").replace("/0", "/")
-                    formatted_time = timeslot_time.strftime('%H:%M')
+                formatted_date = timeslot_date.strftime('%m/%d/%Y').lstrip("0").replace("/0", "/")
+                formatted_time = timeslot_time.strftime('%H:%M')
 
-                    csv_data.append([barcode, formatted_date, formatted_time, "", "BOOKEDIN", "", ""])
+                csv_data.append([barcode, formatted_date, formatted_time, "", "BOOKEDIN", "", ""])
                         # Write CSV file
             filename = f"BorderTimeslots_{datetime.now().strftime('%Y-%m-%d_%H%M%S')}.csv"
             with open(filename, 'w', newline='') as file:
