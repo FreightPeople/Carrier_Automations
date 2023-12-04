@@ -3,6 +3,7 @@ name: Sadliers Kerry Scans Automation
 on: 
   schedule:
     - cron: '00 23 * * 0-4'  # 10pm every day
+    - cron: '00 6 * * 1-5' 
   workflow_dispatch:
 
 jobs:
