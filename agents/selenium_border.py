@@ -107,7 +107,7 @@ class SeleniumBorder:
             to_date_field.send_keys(end_date)
             time.sleep(2)
             self.quiet_batch_process_logger.info(f"Dates and times entered")
-            print(f"Dates and times entered")
+            print(f"Dates and times entered" + start_date + 'To' + end_date)
             search_button = self.driver.find_element(By.ID,'btn-search')
 
 
