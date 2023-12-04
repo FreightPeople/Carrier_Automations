@@ -39,7 +39,7 @@ def initiateBorderTimeslots(cursor, conn):
     # Retrieve the next record without the date
     records_to_process  = border.retrieve_records(cursor)
     print('Border: ',records_to_process)
-
+    border.delete_records(cursor)
     tempflagcheck = False
     booking_list = []
     selenium_border = border.login()
@@ -58,7 +58,8 @@ def initiateBorderTimeslots(cursor, conn):
                     #print('Border Time: ',datetimeval[1])
                     booking_list.append((connote,(datetimeval[0],datetimeval[1])))
                     print('Added connote and timeslot to booking list' + connote + '-' + datetimeval[0] + '-' + datetimeval[1])
-        #border.close_browser(selenium_border)
+        border.close_browser(selenium_border)
+        
         csv_data = []
         if(booking_list):
             for barcode, (date_str, time_str) in booking_list:
@@ -79,7 +80,7 @@ def initiateBorderTimeslots(cursor, conn):
                 writer.writerow(['Barcode', 'Date', 'Time', 'UserID', 'ScanType', 'Location', 'Extra Info'])
                 writer.writerows(csv_data)
             upload_file(filename, server, username, password, remote_path)
-        border.delete_records(cursor)
+        
     except Exception as e:
         print(f"Error: {e}")
         raise

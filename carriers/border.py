@@ -171,8 +171,8 @@ class Border:
     def delete_records(self, cursor):
         # Implement the code to retrieve the next record without the date from the database
         
-        quiet_batch_process_logger.info(f"TFM: Deleting recordsfrom DB...")
-        print('TFM: Deleting recordsfrom DB...')
+        quiet_batch_process_logger.info(f"Border: Deleting recordsfrom DB...")
+        print('Border: Deleting recordsfrom DB...')
 
         try:
             query = f"DELETE FROM [dbo].[tmp_BorderTimeslots]"
@@ -180,7 +180,7 @@ class Border:
             self.conn.commit()
         except Exception as e:
             print(e)
-            quiet_batch_process_logger.error(f"TFM: Error : {e}")
+            quiet_batch_process_logger.error(f"Border: Error : {e}")
 
     def run_stored_procedure_history(self, cursor):
         try:
