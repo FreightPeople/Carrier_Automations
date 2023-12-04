@@ -88,7 +88,7 @@ class SeleniumBorder:
         return all_consignments
 
     def perform_search_history(self,start_date,end_date):
-        time.sleep(5)
+        time.sleep(10)
         try: 
             content_frame = self.driver.find_element(By.ID,'legacy-iframe')
             self.driver.switch_to.frame(content_frame)
