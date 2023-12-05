@@ -30,6 +30,7 @@ def initiateTfmTimeslots(cursor, conn):
     tfm = Tfm(cursor,conn)
     selenium_tfm = tfm.login()
     if(tfm.count_if_records_exists(cursor)==0):
+        print('TFM: ',tfm.count_if_records_exists(cursor))
         tfm.run_stored_procedure(cursor)
         time.sleep(10)
         if(tfm.count_if_records_exists(cursor)==0):
