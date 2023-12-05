@@ -60,7 +60,7 @@ class SeleniumBorder:
         history_url = os.environ['BEX_HISTORY_URL']
         try:
             self.driver.get(history_url)
-            time.sleep(20)
+            time.sleep(35)
             self.quiet_batch_process_logger.info(f"On history page")
             print(f"On history page")
         except Exception as err:
