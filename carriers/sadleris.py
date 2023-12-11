@@ -105,7 +105,7 @@ class Sadleirs:
 
                 if(count==0):
 
-                    insert_query = f"INSERT INTO [dbo].[SadleirsEvents] ([ConnoteNumber], [EventType], [EventDate], [EventTime], [Location], [ExtraInfo]) VALUES ('{status['connote']}', '{status['eventtype']}' , '{status['date']}' , {status['time']}, '{status['location']}','{status['extrainfo']}');"
+                    insert_query = f"INSERT INTO [dbo].[SadleirsEvents] ([ConnoteNumber], [EventType], [EventDate], [EventTime], [Location], [ExtraInfo]) VALUES ('{status['connote']}', '{status['eventtype']}' , '{status['date']}' , '{status['time']}', '{status['location']}','{status['extrainfo']}');"
                     print("Sadleirs: Update Query:", insert_query)
 
                     cursor.execute(insert_query)
