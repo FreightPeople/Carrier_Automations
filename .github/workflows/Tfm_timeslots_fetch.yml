@@ -20,19 +20,19 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install unixodbc
-        sudo apt-get install odbcinst1debian2
-        sudo apt-get install libodbc1
-        sudo apt-get install mssql-tools
+        sudo apt-get install -y unixodbc odbcinst1debian2 libodbc1 mssql-tools firefox xvfb
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Set up Firefox
-      uses: browser-actions/setup-firefox@latest
+    - name: Start Xvfb
+      run: |
+        Xvfb :99 -ac &
+        export DISPLAY=:99
 
     - name: Run tfm timeslot script
       run: python TFM_Timeslots.py
       env:
+        DISPLAY: :99
         FMS_SERVER: ${{ secrets.FMS_SERVER }}
         FMS_DATABASE: ${{ secrets.FMS_DATABASE }}
         FMS_USERNAME: ${{ secrets.FMS_USERNAME }}
