@@ -27,7 +27,7 @@ jobs:
     - name: Start Xvfb
       run: |
         Xvfb :99 -ac &
-        export DISPLAY=:99
+        echo "DISPLAY=:99" >> $GITHUB_ENV
 
     - name: Run tfm timeslot script
       run: python TFM_Timeslots.py
