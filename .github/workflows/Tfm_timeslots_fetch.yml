@@ -20,10 +20,13 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y unixodbc odbcinst1debian2 libodbc1 mssql-tools firefox xvfb
+        sudo apt-get install -y unixodbc odbcinst1debian2 libodbc1 mssql-tools xvfb
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Set up Firefox
+      uses: browser-actions/setup-firefox@latest
+      
     - name: Start Xvfb
       run: |
         Xvfb :99 -ac &
