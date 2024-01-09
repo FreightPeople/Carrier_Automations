@@ -26,18 +26,18 @@ jobs:
 
     - name: Set up Firefox
       uses: browser-actions/setup-firefox@latest
-      
+
+    - name: Install Microsoft ODBC Driver for SQL Server
+      run: |
+        curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+        sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/ubuntu/20.04/prod focal main" > /etc/apt/sources.list.d/mssql-release.list'
+        sudo apt-get update
+        sudo ACCEPT_EULA=Y apt-get install -y msodbcsql17
+        
     - name: Start Xvfb
       run: |
         Xvfb :99 -ac &
         echo "DISPLAY=:99" >> $GITHUB_ENV
-        
-    - name: Install Microsoft ODBC Driver for SQL Server
-      run: |
-        curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-        curl https://packages.microsoft.com/config/ubuntu/$(. /etc/os-release; echo $VERSION_CODENAME)/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
-        sudo apt-get update
-        sudo ACCEPT_EULA=Y apt-get install -y msodbcsql17
         
     - name: Run tfm timeslot script
       run: python TFM_Timeslots.py
