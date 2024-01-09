@@ -17,8 +17,13 @@ jobs:
       with:
         python-version: '3.x'  # This will use the latest version of Python 3
 
-    - name: Install dependencies
+    - name: Install Dependencies
       run: |
+        sudo apt-get update
+        sudo apt-get install unixodbc
+        sudo apt-get install odbcinst1debian2
+        sudo apt-get install libodbc1
+        sudo apt-get install mssql-tools
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
