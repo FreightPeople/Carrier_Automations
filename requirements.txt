@@ -1,3 +1,4 @@
 selenium
 pyodbc
 pandas
+webdriver-manager==3.5.2
