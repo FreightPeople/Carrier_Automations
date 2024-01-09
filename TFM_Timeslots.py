@@ -12,7 +12,7 @@ from datetime import datetime
 import os
 
 FMSconnection_string = (
-    f"DRIVER=SQL Server;"
+    f"DRIVER=ODBC Driver 17 for SQL Server;"
     f"SERVER={os.environ['FMS_SERVER']};"
     f"DATABASE={os.environ['FMS_DATABASE']};"
     f"UID={os.environ['FMS_USERNAME']};"
@@ -92,9 +92,16 @@ def upload_file(file_name, server, username, password, remote_path):
 
 if __name__ == "__main__":
     # Establish the database connection
-    conn = pyodbc.connect(FMSconnection_string)
-    cursor = conn.cursor()
-    initiateTfmTimeslots(cursor, conn)
-    conn.close()
+    try:
+        conn = pyodbc.connect(FMSconnection_string)
+        print("Connection established successfully.")
+        cursor = conn.cursor()
+        initiateTfmTimeslots(cursor, conn)
+    except pyodbc.Error as ex:
+        print(f"Error establishing connection: {ex}")
+    finally:
+        conn.close()
 
+    
+    
     
