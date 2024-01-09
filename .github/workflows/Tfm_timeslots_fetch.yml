@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest  # Use ubuntu-latest for a Linux runner
 
     steps:
     - uses: actions/checkout@v2
@@ -39,6 +39,3 @@ jobs:
         TFM_LOGIN_URL: ${{ secrets.TFM_LOGIN_URL }}
         TFM_PASSWORD: ${{ secrets.TFM_PASSWORD }}
         TFM_USERNAME: ${{ secrets.TFM_USERNAME }}
-
-
-       
