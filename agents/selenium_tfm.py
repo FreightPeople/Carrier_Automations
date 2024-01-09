@@ -14,11 +14,7 @@ class SeleniumTfm:
 
         options = Options()
         options.headless = True
-        options.binary_location = '/usr/bin/firefox' # Explicitly specify the path to the Firefox binary
-
-        service = Service(executable_path=GeckoDriverManager().install())
-
-        self.driver = webdriver.Firefox(service=service, options=options)
+        self.driver = webdriver.Firefox(options=options)
          
         self.url = url
         self.quiet_batch_process_logger = logger
