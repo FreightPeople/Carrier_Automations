@@ -86,8 +86,9 @@ if __name__ == "__main__":
             password=os.environ['FMS_PASSWORD'],
             database=os.environ['FMS_DATABASE']
         )
-    print("Connection established successfully.")
-    cursor = conn.cursor()
+        print("Connection established successfully.")
+        cursor = conn.cursor()
+        initiateSadleirs(cursor, conn)
     except pymssql.DatabaseError as ex:  # Note: changed from pyodbc.Error to pymssql.DatabaseError
         print(f"Error establishing connection: {ex}")
     finally:
