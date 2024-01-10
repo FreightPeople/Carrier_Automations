@@ -33,7 +33,7 @@ jobs:
         echo "DISPLAY=:99" >> $GITHUB_ENV
         
     - name: Run Sadleirs script
-      run: python Sadleirs_Kerry_Scans.py
+      run: python Sadleirs_Kerry_scans.py
       env:
         DISPLAY: :99
         FMS_SERVER: ${{ secrets.FMS_SERVER }}
