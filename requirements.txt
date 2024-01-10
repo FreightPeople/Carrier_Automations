@@ -1,4 +1,4 @@
 selenium
-pyodbc
+pymssql
 pandas
 webdriver-manager==3.5.2
