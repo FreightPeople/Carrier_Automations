@@ -1,6 +1,6 @@
 import time 
 from carriers.tfm import Tfm
-import pyodbc
+import pymssql
 from configparser import ConfigParser
 from datetime import datetime
 import pandas as pd
@@ -10,19 +10,6 @@ import ftplib
 from datetime import datetime
 # Read database configuration from config.ini
 import os
-
-FMSconnection_string = (
-    "DRIVER={{ODBC Driver 17 for SQL Server}};"
-    "SERVER={};"
-    "DATABASE={};"
-    "UID={};"
-    "PWD={}"
-).format(
-    os.environ['FMS_SERVER'],
-    os.environ['FMS_DATABASE'],
-    os.environ['FMS_USERNAME'],
-    os.environ['FMS_PASSWORD']
-)
 
 server = os.environ['FTP_SERVER']
 username = os.environ['FTP_USERNAME']
@@ -98,14 +85,20 @@ def upload_file(file_name, server, username, password, remote_path):
 if __name__ == "__main__":
     # Establish the database connection
     try:
-        conn = pyodbc.connect(FMSconnection_string)
+        conn = pymssql.connect(
+            server=os.environ['FMS_SERVER'],
+            user=os.environ['FMS_USERNAME'],
+            password=os.environ['FMS_PASSWORD'],
+            database=os.environ['FMS_DATABASE']
+        )
         print("Connection established successfully.")
         cursor = conn.cursor()
         initiateTfmTimeslots(cursor, conn)
-    except pyodbc.Error as ex:
+    except pymssql.DatabaseError as ex:  # Note: changed from pyodbc.Error to pymssql.DatabaseError
         print(f"Error establishing connection: {ex}")
     finally:
-        conn.close()
+        if conn:
+            conn.close()
 
     
     
