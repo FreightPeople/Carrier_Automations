@@ -1,6 +1,6 @@
 import time 
 from carriers.border import Border
-import pyodbc
+import pymssql
 from configparser import ConfigParser
 from datetime import datetime
 import pandas as pd
@@ -9,16 +9,6 @@ import csv
 import ftplib
 from datetime import datetime
 import os
-
-
-
-SCTconnection_string = (
-    f"DRIVER=SQL Server;"
-    f"SERVER={os.environ['SCT_SERVER']};"
-    f"DATABASE={os.environ['SCT_DATABASE']};"
-    f"UID={os.environ['SCT_USERNAME']};"
-    f"PWD={os.environ['SCT_PASSWORD']};"
-)
 
 server = os.environ['FTP_SERVER']
 username = os.environ['FTP_USERNAME']
@@ -64,9 +54,19 @@ def upload_file(file_name, server, username, password, remote_path):
 
 if __name__ == "__main__":
     # Establish the database connection
-    conn = pyodbc.connect(SCTconnection_string)
-    cursor = conn.cursor()
-    initiateBorderHistory(cursor,conn)
-    conn.close()
-
+    try:
+        conn = pymssql.connect(
+                server=os.environ['SCT_SERVER'],
+                user=os.environ['SCT_USERNAME'],
+                password=os.environ['SCT_PASSWORD'],
+                database=os.environ['SCT_DATABASE']
+            )
+        print("Connection established successfully.")
+        cursor = conn.cursor()
+        initiateBorderHistory(cursor,conn)
+    except pymssql.DatabaseError as ex:  # Note: changed from pyodbc.Error to pymssql.DatabaseError
+        print(f"Error establishing connection: {ex}")
+    finally:
+        if conn:
+            conn.close()
     
