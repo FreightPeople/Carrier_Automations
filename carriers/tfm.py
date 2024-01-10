@@ -85,7 +85,7 @@ class Tfm:
             print('TFM: Stored Procedure run finish...')
             quiet_batch_process_logger.info(f"TFM TimeSlot: Stored Procedure run finish...")
             
-        except Exception as e:
+        except pymssql.Error as e:  # Updated from pyodbc.Error to pymssql.Error
             print("TFM: Error:", e)
             self.conn.rollback()
             quiet_batch_process_logger.error(f"TFM: Error : {e}")
