@@ -1,6 +1,6 @@
 import time 
 from carriers.border import Border
-import pyodbc
+import pymssql
 from configparser import ConfigParser
 from datetime import datetime
 import pandas as pd
@@ -108,7 +108,18 @@ def upload_file(file_name, server, username, password, remote_path):
 
 if __name__ == "__main__":
     # Establish the database connection
-    conn = pyodbc.connect(FMSconnection_string)
-    cursor = conn.cursor()
-    initiateBorderTimeslots(cursor,conn)
-    conn.close()
+    try:
+        conn = pymssql.connect(
+            server=os.environ['FMS_SERVER'],
+            user=os.environ['FMS_USERNAME'],
+            password=os.environ['FMS_PASSWORD'],
+            database=os.environ['FMS_DATABASE']
+        )
+        print("Connection established successfully.")
+        cursor = conn.cursor()
+        initiateBorderTimeslots(cursor,conn)
+    except pymssql.DatabaseError as ex:  # Note: changed from pyodbc.Error to pymssql.DatabaseError
+        print(f"Error establishing connection: {ex}")
+    finally:
+        if conn:
+            conn.close()    
