@@ -32,8 +32,8 @@ jobs:
         Xvfb :99 -ac &
         echo "DISPLAY=:99" >> $GITHUB_ENV
         
-    - name: Run main script
-      run: python border_timeslot_run.py
+    - name: Run border script
+      run: python border_delivered_signed.py
       env:
         DISPLAY: :99
         SCT_SERVER: ${{ secrets.SCT_SERVER }}
