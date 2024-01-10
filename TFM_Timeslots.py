@@ -12,11 +12,16 @@ from datetime import datetime
 import os
 
 FMSconnection_string = (
-    f"DRIVER=ODBC Driver 17 for SQL Server;"
-    f"SERVER={os.environ['FMS_SERVER']};"
-    f"DATABASE={os.environ['FMS_DATABASE']};"
-    f"UID={os.environ['FMS_USERNAME']};"
-    f"PWD={os.environ['FMS_PASSWORD']};"
+    "DRIVER={ODBC Driver 17 for SQL Server};"
+    "SERVER={};"
+    "DATABASE={};"
+    "UID={};"
+    "PWD={};"
+).format(
+    os.environ['FMS_SERVER'],
+    os.environ['FMS_DATABASE'],
+    os.environ['FMS_USERNAME'],
+    os.environ['FMS_PASSWORD']
 )
 
 server = os.environ['FTP_SERVER']
