@@ -17,17 +17,25 @@ jobs:
       with:
         python-version: '3.x'  # This will use the latest version of Python 3
 
-    - name: Install dependencies
+    - name: Install Dependencies
       run: |
+        sudo apt-get update
+        sudo apt-get install -y xvfb
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
     - name: Set up Firefox
       uses: browser-actions/setup-firefox@latest
-
-    - name: Run border script
-      run: python border_delivered_signed.py
+      
+    - name: Start Xvfb
+      run: |
+        Xvfb :99 -ac &
+        echo "DISPLAY=:99" >> $GITHUB_ENV
+        
+    - name: Run main script
+      run: python border_timeslot_run.py
       env:
+        DISPLAY: :99
         SCT_SERVER: ${{ secrets.SCT_SERVER }}
         SCT_DATABASE: ${{ secrets.SCT_DATABASE }}
         SCT_USERNAME: ${{ secrets.SCT_USERNAME }}
