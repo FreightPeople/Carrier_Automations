@@ -50,6 +50,8 @@ jobs:
         BEX_PASSWORD: ${{ secrets.BEX_PASSWORD }}
         BEX_SEARCH_URL: ${{ secrets.BEX_SEARCH_URL }}
         BEX_USERNAME: ${{ secrets.BEX_USERNAME }}
+        BEX_CLIENT_ID: ${{ secrets.BEX_CLIENT_ID }}
+        BEX_CLIENT_SECRET: ${{ secrets.BEX_CLIENT_SECRET }}
 
 
 
