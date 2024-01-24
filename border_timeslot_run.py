@@ -62,8 +62,8 @@ def initiateBorderTimeslots(cursor, conn):
             for barcode, (date_str, time_str) in booking_list:
                 
                             # Parse date and time
-                timeslot_date = datetime.strptime(date_str, '%d/%m/%Y')
-                timeslot_time = datetime.strptime(time_str, '%I:%M %p')
+                timeslot_date = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S')
+                timeslot_time = datetime.strptime(time_str, '%I:%M%p')
 
                                 # Format date and time (remove leading zeros for Windows compatibility)
                 formatted_date = timeslot_date.strftime('%m/%d/%Y').lstrip("0").replace("/0", "/")
