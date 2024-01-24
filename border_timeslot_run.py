@@ -50,20 +50,12 @@ def initiateBorderTimeslots(cursor, conn):
             
             consignment_details = fetch_consignment_details(connote, access_token)
             # Check if the response contains the 'TimeslotDate' and 'TimeslotTime'
-            datetimeval = consignment_details.get('TimeslotDate'), consignment_details.get('TimeslotTime')
-            
-            if datetimeval is not None and all(val not in (None, '') for val in datetimeval):
-                # Format the dates to match the database format, if necessary
-                timeslot_date_api = datetime.strptime(datetimeval[0], '%Y-%m-%dT%H:%M:%S').date()
-                timeslot_time_api = datetimeval[1]
-
-                # Compare with database values
-                if str(timeslot_date_db) != str(timeslot_date_api) or str(timeslot_time_db) != timeslot_time_api:
-                    booking_list.append((connote, (datetimeval[0], datetimeval[1])))
-                    print('Added connote and timeslot to booking list: ' + connote + '-' + datetimeval[0] + '-' + datetimeval[1])
-                else:
-                    print('Timeslot matches for connote: ' + connote)
-        
+            if 'TimeslotDate' in consignment_details and 'TimeslotTime' in consignment_details:
+                booking_list.append((connote, (consignment_details['TimeslotDate'], consignment_details['TimeslotTime'])))
+                print('Added connote and timeslot to booking list: ' + connote + '-' + consignment_details['TimeslotDate'] + '-' + consignment_details['TimeslotTime'])
+            else:
+                print(f'Timeslot information not available for {connote}')
+                                      
         
         csv_data = []
         if(booking_list):

@@ -23,8 +23,6 @@ def get_access_token(client_id, client_secret):
 def fetch_consignment_details(consignment_number, access_token):
     base_url = 'https://integrationapi.borderexpress.com.au'
     endpoint = f'{base_url}/api/v1/consignments/{consignment_number}'
-    print(access_token)
-    print(endpoint)
     headers = {
         'Authorization': f'Bearer {access_token}',
         'Content-Type': 'application/json'
