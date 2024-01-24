@@ -1,6 +1,5 @@
 import time 
 from carriers.border import Border
-from borderApiRequests import get_access_token, fetch_consignment_details
 import pymssql
 from configparser import ConfigParser
 from datetime import datetime
@@ -43,27 +42,23 @@ def initiateBorderTimeslots(cursor, conn):
     border.delete_records(cursor)
     tempflagcheck = False
     booking_list = []
+    selenium_border = border.login()
     try:
-        access_token = get_access_token(os.environ['BEX_CLIENT_ID'], os.environ['BEX_CLIENT_SECRET'])
-        for record in records_to_process:
-            connote, timeslot_date_db, timeslot_time_db = record
-            
-            consignment_details = fetch_consignment_details(connote, access_token)
-            # Check if the response contains the 'TimeslotDate' and 'TimeslotTime'
-            datetimeval = consignment_details.get('TimeslotDate'), consignment_details.get('TimeslotTime')
-            
-            if datetimeval is not None and all(val not in (None, '') for val in datetimeval):
-                # Format the dates to match the database format, if necessary
-                timeslot_date_api = datetime.strptime(datetimeval[0], '%Y-%m-%dT%H:%M:%S').date()
-                timeslot_time_api = datetimeval[1]
-
-                # Compare with database values
-                if str(timeslot_date_db) != str(timeslot_date_api) or str(timeslot_time_db) != timeslot_time_api:
-                    booking_list.append((connote, (datetimeval[0], datetimeval[1])))
-                    print('Added connote and timeslot to booking list: ' + connote + '-' + datetimeval[0] + '-' + datetimeval[1])
-                else:
-                    print('Timeslot matches for connote: ' + connote)
-        
+        for connote in records_to_process:
+            print('Border: Processing : ', connote)
+            if connote:
+                
+                quiet_batch_process_logger.info(f"Border: Starting process for Con : {connote}")
+                datetimeval  = border.process_record(selenium_border,connote)
+                
+                if datetimeval is not None and all(val not in (None, '') for val in datetimeval):
+                    #border.save_record(cursor, connote, datetimeval[0], datetimeval[1])
+                    #print('Border: ',connote)
+                    #print('Border Date: ',datetimeval[0])
+                    #print('Border Time: ',datetimeval[1])
+                    booking_list.append((connote,(datetimeval[0],datetimeval[1])))
+                    print('Added connote and timeslot to booking list' + connote + '-' + datetimeval[0] + '-' + datetimeval[1])
+        border.close_browser(selenium_border)
         
         csv_data = []
         if(booking_list):
