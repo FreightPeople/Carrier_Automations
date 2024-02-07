@@ -46,7 +46,7 @@ def initiateBorderTimeslots(cursor, conn):
     try:
         access_token = get_access_token(os.environ['BEX_CLIENT_ID'], os.environ['BEX_CLIENT_SECRET'])
         for record in records_to_process:
-            connote, timeslot_date_db, timeslot_time_db = record
+            connote = record
             
             consignment_details = fetch_consignment_details(connote, access_token)
             # Check if the response contains the 'TimeslotDate' and 'TimeslotTime'
