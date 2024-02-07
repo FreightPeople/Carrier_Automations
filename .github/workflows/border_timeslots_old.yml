@@ -1,4 +1,4 @@
-name: Python Border Timeslots Automation
+name: Python Border Timeslots old Automation
 
 on:
     schedule:
