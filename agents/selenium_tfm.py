@@ -85,11 +85,17 @@ class SeleniumTfm:
             for row in rows[1:]:
                 cells = row.find_elements(By.TAG_NAME, 'td')
                 if len(cells) >= 5:
-                    # Extract text from 4th ('Delivery Date') and 5th ('From') 'td' elements
-                    delivery_date = cells[3].text
-                    from_time = cells[4].text
-                    booking_details.append((delivery_date, from_time))
-                    print(f"{connote} booking details: {delivery_date}, {from_time}")
+                    # Extract text from  ('Delivery Date') and  ('To') 'td' elements
+                    delivery_date_text = cells[1].text
+                    # Remove any leading text, assuming it always starts with "On "
+                    if delivery_date_text.startswith("On "):
+                        delivery_date = delivery_date_text.split(" ")[1]
+                    else:
+                        delivery_date = delivery_date_text  # Fallback in case the format is not as expected
+                    to_time = cells[3].text
+                    booking_details.append((delivery_date, to_time))
+
+                    print(f"{connote} booking details: {delivery_date}, {to_time}")
             self.driver.switch_to.default_content()
             
             return booking_details
