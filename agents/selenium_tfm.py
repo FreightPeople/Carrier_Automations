@@ -92,10 +92,10 @@ class SeleniumTfm:
                         delivery_date = delivery_date_text.split(" ")[1]
                     else:
                         delivery_date = delivery_date_text  # Fallback in case the format is not as expected
-                    to_time = cells[3].text
-                    booking_details.append((delivery_date, to_time))
+                    from_time = cells[2].text
+                    booking_details.append((delivery_date, from_time))
 
-                    print(f"{connote} booking details: {delivery_date}, {to_time}")
+                    print(f"{connote} booking details: {delivery_date}, {from_time}")
             self.driver.switch_to.default_content()
             
             return booking_details
