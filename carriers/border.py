@@ -24,7 +24,7 @@ class Border:
             query = f"Select [CarrierName], [ConnoteNumber] ,[DeliveryCompany] ,[TimeslotDate] ,[TimeslotTime] ,[IsHazardous] FROM [dbo].[tmp_BorderTimeslots]"
             cursor.execute(query)
             #records = [record[1] for record in cursor.fetchall()]
-            records = [(record[1], record[3], record[4]) for record in cursor.fetchall()]
+            records = [(record[1]) for record in cursor.fetchall()]
 
             quiet_batch_process_logger.info(f"Border: Records Retrieved...")
 
