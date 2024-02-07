@@ -2,6 +2,7 @@ from agents.selenium_tfm import SeleniumTfm
 from datetime import datetime
 import pandas as pd
 from automation_logger import quiet_batch_process_logger
+import pymssql
 import os
 class Tfm:
 
