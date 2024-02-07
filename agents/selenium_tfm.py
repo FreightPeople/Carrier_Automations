@@ -65,11 +65,11 @@ class SeleniumTfm:
         time.sleep(2)
         view_connotefield = self.driver.find_element(By.ID, 'btnView')
         view_connotefield.click()
-        time.sleep(2)
+        time.sleep(3)
         
         # Check if there is a booking
         timeslot_field = self.driver.find_element(By.ID, 'aBooking')
-        if 'Delivery Window(1)' in timeslot_field.text:
+        if 'Delivery Window (1)' in timeslot_field.text:
             print("Found a booking!")
             # Perform the actions to view the booking details
             # You might need to adjust the code here based on how your application shows the booking details
