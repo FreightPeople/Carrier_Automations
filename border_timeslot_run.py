@@ -25,6 +25,7 @@ username = os.environ['FTP_USERNAME']
 password = os.environ['FTP_PASSWORD']
 remote_path = os.environ['FTP_REMOTE_PATH']
 
+
 def initiateBorderTimeslots(cursor, conn):
 
     border = Border(cursor,conn)
