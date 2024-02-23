@@ -2,7 +2,7 @@ import requests
 
 
 def get_access_token(client_id, client_secret):
-    token_url = "https://api.borderexpress.com.au"
+    token_url = "https://api.borderexpress.com.au/token"
     payload = {
         'grant_type': 'client_credentials',
         'client_id': client_id,
