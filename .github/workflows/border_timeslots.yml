@@ -3,7 +3,7 @@ name: Python Border Timeslots Automation
 on:
     schedule:
         - cron: '0 20 * * 0-5'
-        - cron: '25 23 * *0-5'   # Second schedule time
+        - cron: '25 23 * * 0-5'   # Second schedule time
     workflow_dispatch:
 
 
