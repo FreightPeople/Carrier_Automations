@@ -13,4 +13,5 @@ def fetch_consignment_details(consignment_number,client_id,client_secret):
     }
 
     response = requests.post(url, headers=headers, json=data)
+    print(response.json())
     return response.json()
