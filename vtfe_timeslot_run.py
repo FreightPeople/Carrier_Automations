@@ -45,9 +45,10 @@ def initiateVTFETimeslots(cursor, conn):
         tempflagcheck = False
         booking_list = []
         try:
-            for record in records_to_process:
-                connote = record
-                
+           for i in range(0, len(records_to_process), 10):
+            batch = records_to_process[i:i+10]  # Get the next 10 records
+    
+            for connote in batch:
                 consignment_details = fetch_consignment_details(connote, os.environ['VTFE_client_id'], os.environ['VTFE_client_secret'])
                 # Check if the response contains the 'TimeslotDate' and 'TimeslotTime'
                 
