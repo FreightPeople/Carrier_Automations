@@ -1,5 +1,5 @@
 import time 
-from carriers.vtfe import vtfe
+from carriers.vtfe import VTFE
 import pymssql
 from configparser import ConfigParser
 from datetime import datetime
@@ -28,7 +28,7 @@ remote_path = os.environ['FTP_REMOTE_PATH']
 
 def initiateVTFETimeslots(cursor, conn):
     
-        vtfe = vtfe(cursor,conn)
+        vtfe = VTFE(cursor,conn)
     
         print('VTFE: ',vtfe.count_if_records_exists(cursor))
     

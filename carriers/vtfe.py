@@ -4,7 +4,7 @@ import pandas as pd
 from automation_logger import quiet_batch_process_logger
 import os
 
-class Border:
+class VTFE:
 
    
     def __init__(self, cursor, conn):
