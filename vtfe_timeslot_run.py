@@ -51,10 +51,10 @@ def initiateVTFETimeslots(cursor, conn):
                 consignment_details = fetch_consignment_details(connote, os.environ['VTFE_client_id'], os.environ['VTFE_client_secret'])
                 # Check if the response contains the 'TimeslotDate' and 'TimeslotTime'
                 
-                if 'ConsignmentBookingDateTime' in consignment_details:
-                    if(consignment_details['ConsignmentBookingDateTime'] is not None or consignment_details['ConsignmentBookingDateTime'] != ''):
-                        booking_list.append((connote, (consignment_details['ConsignmentBookingDateTime'])))
-                        print('Added connote and timeslot to booking list: ' + connote + '-' + consignment_details['ConsignmentBookingDateTime'])
+                if 'ConsignmentBookingDateTime' in consignment_details['Data']:
+                    if(consignment_details['Data']['ConsignmentBookingDateTime'] is not None or consignment_details['Data']['ConsignmentBookingDateTime'] != ''):
+                        booking_list.append((connote, (consignment_details['Data']['ConsignmentBookingDateTime'])))
+                        print('Added connote and timeslot to booking list: ' + connote + '-' + consignment_details['Data']['ConsignmentBookingDateTime'])
                     else:
                         print(f'Timeslot information not available for {connote}')
                 else:
