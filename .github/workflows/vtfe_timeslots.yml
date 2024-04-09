@@ -1,0 +1,55 @@
+name: Python Border Timeslots Automation
+
+on:
+    schedule:
+        - cron: '0 20 * * 0-5'
+        - cron: '25 23 * * 0-5'   # Second schedule time
+    workflow_dispatch:
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'  # This will use the latest version of Python 3
+
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y xvfb
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Set up Firefox
+      uses: browser-actions/setup-firefox@latest
+      
+    - name: Start Xvfb
+      run: |
+        Xvfb :99 -ac &
+        echo "DISPLAY=:99" >> $GITHUB_ENV
+        
+    - name: Run main script
+      run: python border_timeslot_run.py
+      env:
+        DISPLAY: :99
+        FMS_SERVER: ${{ secrets.FMS_SERVER }}
+        FMS_DATABASE: ${{ secrets.FMS_DATABASE }}
+        FMS_USERNAME: ${{ secrets.FMS_USERNAME }}
+        FMS_PASSWORD: ${{ secrets.FMS_PASSWORD }}
+        FTP_SERVER: ${{ secrets.FTP_SERVER }}
+        FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+        FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        FTP_REMOTE_PATH: ${{ secrets.FTP_REMOTE_PATH }}
+        VTFE_client_id: ${{ secrets.VTFE_CLIENT_ID }}
+        VTFE_client_secret: ${{ secrets.VTFE_CLIENT_SECRET }}
+
+
+
+
+       

@@ -13,8 +13,6 @@ class Border:
         self.cursor = cursor
        
 
-    url = os.environ['VTFE_Base_URL'] 
-
     def retrieve_records(self, cursor):
         # Implement the code to retrieve the next record without the date from the database
         
