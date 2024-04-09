@@ -53,6 +53,7 @@ def initiateVTFETimeslots(cursor, conn):
                 # Check if the response contains the 'TimeslotDate' and 'TimeslotTime'
                 
                 if 'ConsignmentBookingDateTime' in consignment_details['Data']:
+                    print(consignment_details['Data']['ConsignmentBookingDateTime'])
                     if(consignment_details['Data']['ConsignmentBookingDateTime'] is not None or consignment_details['Data']['ConsignmentBookingDateTime'] != ''):
                         booking_list.append((connote, (consignment_details['Data']['ConsignmentBookingDateTime'])))
                         print('Added connote and timeslot to booking list: ' + connote + '-' + consignment_details['Data']['ConsignmentBookingDateTime'])
@@ -60,6 +61,7 @@ def initiateVTFETimeslots(cursor, conn):
                         print(f'Timeslot information not available for {connote}')
                 else:
                     print(f'Timeslot information not available for {connote}')
+            print('Sleeping for 60 seconds')
             time.sleep(60)
                 
             csv_data = []
