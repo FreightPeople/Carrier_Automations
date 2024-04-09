@@ -35,7 +35,7 @@ jobs:
         echo "DISPLAY=:99" >> $GITHUB_ENV
         
     - name: Run main script
-      run: python border_timeslot_run.py
+      run: python vtfe_timeslot_run.py
       env:
         DISPLAY: :99
         FMS_SERVER: ${{ secrets.FMS_SERVER }}
