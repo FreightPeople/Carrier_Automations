@@ -15,6 +15,7 @@ def fetch_consignment_details(consignment_number,client_id,client_secret):
     response = requests.post(url, headers=headers, json=data)
     if response.status_code == 200:
         json_data = response.json()
+        print(json_data)
         data_json = json_data.get('Data', {})
             # Return the Data JSON object
         return data_json
