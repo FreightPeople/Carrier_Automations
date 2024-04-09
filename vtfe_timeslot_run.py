@@ -60,6 +60,9 @@ def initiateVTFETimeslots(cursor, conn):
                         print(f'Timeslot information not available for {connote}')
                 else:
                     print(f'Timeslot information not available for {connote}')
+            if (i + 1) % 10 == 0:
+                print("Waiting for 1 minute...")
+                time.sleep(60)
             csv_data = []
             if booking_list:
                 for barcode, booking_datetime in booking_list:
