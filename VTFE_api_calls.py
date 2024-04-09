@@ -21,5 +21,5 @@ def fetch_consignment_details(consignment_number,client_id,client_secret):
         return data_json
     else:
         # If the request fails, print an error message and return None
-        print(f"Failed to fetch consignment details. Status code: {response.status_code}")
+        print(f"{consignment_number} - Failed to fetch consignment details. Status code: {response.status_code}")
         return None
