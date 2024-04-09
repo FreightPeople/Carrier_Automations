@@ -13,5 +13,12 @@ def fetch_consignment_details(consignment_number,client_id,client_secret):
     }
 
     response = requests.post(url, headers=headers, json=data)
-    print(response.json())
-    return response.json()
+    if response.status_code == 200:
+        json_data = response.json()
+        data_json = json_data.get('Data', {})
+            # Return the Data JSON object
+        return data_json
+    else:
+        # If the request fails, print an error message and return None
+        print(f"Failed to fetch consignment details. Status code: {response.status_code}")
+        return None
