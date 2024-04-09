@@ -116,7 +116,7 @@ if __name__ == "__main__":
         )
         print("Connection established successfully.")
         cursor = conn.cursor()
-        (cursor,conn)
+        initiateVTFETimeslots(cursor,conn)
     except pymssql.DatabaseError as ex:  # Note: changed from pyodbc.Error to pymssql.DatabaseError
         print(f"Error establishing connection: {ex}")
     finally:
