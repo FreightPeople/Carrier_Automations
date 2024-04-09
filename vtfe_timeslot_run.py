@@ -53,7 +53,7 @@ def initiateVTFETimeslots(cursor, conn):
                 # Check if the response contains the 'TimeslotDate' and 'TimeslotTime'
                 
                 if 'ConsignmentBookingDateTime' in consignment_details['Data']:
-                    print(consignment_details['Data']['ConsignmentBookingDateTime'])
+                    #print(consignment_details['Data']['ConsignmentBookingDateTime'])
                     if(consignment_details['Data']['ConsignmentBookingDateTime'] is not None and consignment_details['Data']['ConsignmentBookingDateTime'] != ''):
                         booking_list.append((connote, (consignment_details['Data']['ConsignmentBookingDateTime'])))
                         print('Added connote and timeslot to booking list: ' + connote + '-' + consignment_details['Data']['ConsignmentBookingDateTime'])
@@ -64,26 +64,22 @@ def initiateVTFETimeslots(cursor, conn):
             print('Sleeping for 60 seconds')
             time.sleep(60)
                 
-            csv_data = []
-            if booking_list:
-                for barcode, booking_datetime in booking_list:
-                    # Parse datetime string
-                    booking_datetime = datetime.strptime(booking_datetime, '%Y-%m-%d %H:%M')
-
-                    # Format date and time (remove leading zeros for Windows compatibility)
-                    formatted_date = booking_datetime.strftime('%m/%d/%Y').lstrip("0").replace("/0", "/")
-                    formatted_time = booking_datetime.strftime('%H:%M')
-
-                    csv_data.append([barcode, formatted_date, formatted_time, "", "BOOKEDIN", "", ""])
-
-                # Write CSV file
-                filename = f"VTFETimeslots_{datetime.now().strftime('%Y-%m-%d_%H%M%S')}.csv"
-                with open(filename, 'w', newline='') as file:
-                    writer = csv.writer(file)
-                    writer.writerow(['Barcode', 'Date', 'Time', 'UserID', 'ScanType', 'Location', 'Extra Info'])
-                    writer.writerows(csv_data)
-
-                upload_file(filename, server, username, password, remote_path)
+           csv_data = []
+           if booking_list:
+               for barcode, booking_datetime in booking_list:
+                   # Parse datetime string
+                   booking_datetime = datetime.strptime(booking_datetime, '%Y-%m-%d %H:%M')
+                   # Format date and time (remove leading zeros for Windows compatibility)
+                   formatted_date = booking_datetime.strftime('%m/%d/%Y').lstrip("0").replace("/0", "/")
+                   formatted_time = booking_datetime.strftime('%H:%M')
+                   csv_data.append([barcode, formatted_date, formatted_time, "", "BOOKEDIN", "", ""])
+               # Write CSV file
+               filename = f"VTFETimeslots_{datetime.now().strftime('%Y-%m-%d_%H%M%S')}.csv"
+               with open(filename, 'w', newline='') as file:
+                   writer = csv.writer(file)
+                   writer.writerow(['Barcode', 'Date', 'Time', 'UserID', 'ScanType', 'Location', 'Extra Info'])
+                   writer.writerows(csv_data)
+               upload_file(filename, server, username, password, remote_path)
         except:
             print('Error fetching consignment details')
 
