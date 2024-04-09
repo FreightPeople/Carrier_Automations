@@ -54,7 +54,7 @@ def initiateVTFETimeslots(cursor, conn):
                 
                 if 'ConsignmentBookingDateTime' in consignment_details['Data']:
                     print(consignment_details['Data']['ConsignmentBookingDateTime'])
-                    if(consignment_details['Data']['ConsignmentBookingDateTime'] is not None or consignment_details['Data']['ConsignmentBookingDateTime'] != ''):
+                    if(consignment_details['Data']['ConsignmentBookingDateTime'] is not None and consignment_details['Data']['ConsignmentBookingDateTime'] != ''):
                         booking_list.append((connote, (consignment_details['Data']['ConsignmentBookingDateTime'])))
                         print('Added connote and timeslot to booking list: ' + connote + '-' + consignment_details['Data']['ConsignmentBookingDateTime'])
                     else:
