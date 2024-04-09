@@ -1,4 +1,4 @@
-name: Python Border Timeslots Automation
+name: Python VTFE Timeslots Automation
 
 on:
     schedule:
