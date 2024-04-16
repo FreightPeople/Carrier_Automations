@@ -60,7 +60,7 @@ class SeleniumTnt:
             print(f"Error while clicking the 'Track' button: {e}")
         try:
             # Wait for the element with the specified ID to be present in the DOM
-            ETA_element = WebDriverWait(self.driver, 10).until(
+            ETA_element = WebDriverWait(self.driver, 20).until(
                 EC.presence_of_element_located((By.ID, 'bodycontent_explbl'))
             )
             
