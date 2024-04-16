@@ -19,8 +19,10 @@ def initiateTntETAUpdate(cursor, conn):
     selenium_tnt = tnt.login()
     records = tnt.retreive_records(cursor)
     if records and len(records) > 0:
-        print('TNT: ',records)
-        time.sleep(5)
+        for record in records:
+            eta = tnt.get_web_ETA(selenium_tnt, record[1])
+            print(f"ETA for {record[1]} is {eta}")
+    time.sleep(2)
     # Import the SeleniumTnt class from agents
 
 if __name__ == "__main__":
