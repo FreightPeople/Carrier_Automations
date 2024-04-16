@@ -17,8 +17,9 @@ def initiateTntETAUpdate(cursor, conn):
     
     tnt = Tnt(cursor,conn)
     selenium_tnt = tnt.login()
-    if(tnt.retreive_records(cursor).count>0):
-        print('TNT: ',tnt.retreive_records(cursor))
+    records = tnt.retreive_records(cursor)
+    if records and len(records) > 0:
+        print('TNT: ',records)
         time.sleep(5)
     # Import the SeleniumTnt class from agents
 
