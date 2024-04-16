@@ -73,7 +73,7 @@ class SeleniumTnt:
             
             return ETA
         except Exception as err:
-            print(f"Error at ETA getting: {err}")
+            print(f"Error at ETA getting: {err.message}")
             return None
 
 
