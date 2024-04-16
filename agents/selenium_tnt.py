@@ -44,9 +44,9 @@ class SeleniumTnt:
 
 
             connote_field.send_keys(connote)
-            print.info("Entered text in the TextArea")
+            print("Entered text in the TextArea")
         except Exception as e:
-            print.error(f"Error while interacting with the TextArea: {e}")
+            print(f"Error while interacting with the TextArea: {e}")
         try:
             # Wait for the button to be clickable
             track_button = WebDriverWait(self.driver, 10).until(
@@ -72,7 +72,7 @@ class SeleniumTnt:
             
             return ETA
         except Exception as err:
-            print.error(f"Error: {err}")
+            print(f"Error: {err}")
             return None
 
 
