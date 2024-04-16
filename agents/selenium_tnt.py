@@ -27,6 +27,8 @@ class SeleniumTnt:
             self.quiet_batch_process_logger.error(f"Error : {err}")
     
     def get_ETA(self,connote):
+        close_cookie_bar = self.driver.find_element(By.CLASS_NAME, 'js-cookiebar-close')
+        close_cookie_bar.click()
         connote_field = self.driver.find_element(By.ID, 'TextArea')
         connote_field.send_keys(connote)
         time.sleep(1)
