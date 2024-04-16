@@ -4,7 +4,7 @@ import pandas as pd
 from automation_logger import quiet_batch_process_logger
 import pymssql
 import os
-class Tfm:
+class Tnt:
 
     def __init__(self,cursor,conn):
         self.conn = conn
