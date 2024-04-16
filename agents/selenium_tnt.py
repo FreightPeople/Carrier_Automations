@@ -29,8 +29,8 @@ class SeleniumTnt:
     
     def get_ETA(self,connote):
         close_cookie_bar = self.driver.find_element(By.CLASS_NAME, 'js-cookiebar-close')
-        actions = ActionChains(self.driver)
-        actions.move_to_element(close_cookie_bar).perform()
+        self.driver.execute_script("arguments[0].click();", close_cookie_bar)
+        self.quiet_batch_process_logger.info("Closed the cookie bar")
         close_cookie_bar.click()
         close_cookie_bar.click()
         connote_field = self.driver.find_element(By.ID, 'TextArea')
