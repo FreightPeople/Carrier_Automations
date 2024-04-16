@@ -55,6 +55,7 @@ class SeleniumTnt:
             # Click the 'Track' button
             track_button.click()
             print("Clicked the 'Track' button")
+            time.sleep(10)
         except Exception as e:
             print(f"Error while clicking the 'Track' button: {e}")
         try:
