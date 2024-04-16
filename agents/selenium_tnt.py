@@ -30,12 +30,23 @@ class SeleniumTnt:
     def get_ETA(self,connote):
         #content_frame = self.driver.find_element(By.CLASS_NAME, 'cookieMessageIParsys iparsys parsys')
         #self.driver.switch_to.frame(content_frame)
+        
         close_cookie_bar = self.driver.find_element(By.CLASS_NAME, 'js-cookiebar-close')
         self.driver.execute_script("arguments[0].click();", close_cookie_bar)
         self.quiet_batch_process_logger.info("Closed the cookie bar")
         time.sleep(3)
-        connote_field = self.driver.find_element(By.NAME, 'TextArea')
-        connote_field.send_keys(connote)
+        try:
+            # Locate the TextArea element
+            connote_field = WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located((By.ID, 'TextArea'))
+            )
+            # Enter text into the TextArea element
+
+
+            connote_field.send_keys(connote)
+            self.quiet_batch_process_logger.info("Entered text in the TextArea")
+        except Exception as e:
+            self.quiet_batch_process_logger.error(f"Error while interacting with the TextArea: {e}")
         time.sleep(1)
         track_connote = self.driver.find_element(By.ID, 'bodycontent_btnSubmit')
         track_connote.click()
