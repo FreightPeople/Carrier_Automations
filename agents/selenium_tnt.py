@@ -44,9 +44,9 @@ class SeleniumTnt:
 
 
             connote_field.send_keys(connote)
-            self.quiet_batch_process_logger.info("Entered text in the TextArea")
+            print.info("Entered text in the TextArea")
         except Exception as e:
-            self.quiet_batch_process_logger.error(f"Error while interacting with the TextArea: {e}")
+            print.error(f"Error while interacting with the TextArea: {e}")
         try:
             # Wait for the button to be clickable
             track_button = WebDriverWait(self.driver, 10).until(
@@ -54,9 +54,9 @@ class SeleniumTnt:
             )
             # Click the 'Track' button
             track_button.click()
-            self.quiet_batch_process_logger.info("Clicked the 'Track' button")
+            print("Clicked the 'Track' button")
         except Exception as e:
-            self.quiet_batch_process_logger.error(f"Error while clicking the 'Track' button: {e}")
+            print(f"Error while clicking the 'Track' button: {e}")
         try:
             # Wait for the element with the specified ID to be present in the DOM
             ETA_element = WebDriverWait(self.driver, 10).until(
@@ -68,13 +68,11 @@ class SeleniumTnt:
             
             if not ETA:  # Check if ETA is empty
                 ETA = None
-            
-            self.quiet_batch_process_logger.info(f"ETA for connote {connote} is {ETA}")
             print(f"ETA for connote {connote} is {ETA}")
             
             return ETA
         except Exception as err:
-            self.quiet_batch_process_logger.error(f"Error: {err}")
+            print.error(f"Error: {err}")
             return None
 
 
