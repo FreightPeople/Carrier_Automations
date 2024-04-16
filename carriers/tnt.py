@@ -46,4 +46,3 @@ class Tnt:
         eta = selenium_tnt.get_ETA(connote)
         quiet_batch_process_logger.info(f"TNT: ETA Processed...")
         return eta
-    

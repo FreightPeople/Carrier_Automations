@@ -20,6 +20,7 @@ def initiateTntETAUpdate(cursor, conn):
     records = tnt.retreive_records(cursor)
     if records and len(records) > 0:
         for record in records:
+            print(f"Processing record {record[1]}")
             eta = tnt.get_web_ETA(selenium_tnt, record[1])
             print(f"ETA for {record[1]} is {eta}")
     time.sleep(2)
