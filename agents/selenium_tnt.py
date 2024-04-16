@@ -47,10 +47,16 @@ class SeleniumTnt:
             self.quiet_batch_process_logger.info("Entered text in the TextArea")
         except Exception as e:
             self.quiet_batch_process_logger.error(f"Error while interacting with the TextArea: {e}")
-        time.sleep(1)
-        track_connote = self.driver.find_element(By.ID, 'bodycontent_btnSubmit')
-        track_connote.click()
-        time.sleep(3)
+        try:
+            # Wait for the button to be clickable
+            track_button = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable((By.ID, 'bodycontent_btnSubmit'))
+            )
+            # Click the 'Track' button
+            track_button.click()
+            self.quiet_batch_process_logger.info("Clicked the 'Track' button")
+        except Exception as e:
+            self.quiet_batch_process_logger.error(f"Error while clicking the 'Track' button: {e}")
         try:
             ETA = self.driver.find_element(By.ID, 'bodycontent_explbl').text
             if(ETA == ''):
