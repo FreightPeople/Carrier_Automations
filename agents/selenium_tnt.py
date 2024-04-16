@@ -6,6 +6,7 @@ from selenium.webdriver.firefox.options import Options
 import datetime
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 import os
 
 class SeleniumTnt:
@@ -28,7 +29,9 @@ class SeleniumTnt:
     
     def get_ETA(self,connote):
         close_cookie_bar = self.driver.find_element(By.CLASS_NAME, 'js-cookiebar-close')
-        self.driver.execute_script("arguments[0].scrollIntoView(true);", close_cookie_bar)
+        actions = ActionChains(self.driver)
+        actions.move_to_element(close_cookie_bar).perform()
+        close_cookie_bar.click()
         close_cookie_bar.click()
         connote_field = self.driver.find_element(By.ID, 'TextArea')
         connote_field.send_keys(connote)
