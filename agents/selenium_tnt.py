@@ -58,14 +58,23 @@ class SeleniumTnt:
         except Exception as e:
             self.quiet_batch_process_logger.error(f"Error while clicking the 'Track' button: {e}")
         try:
-            ETA = self.driver.find_element(By.ID, 'bodycontent_explbl').text
-            if(ETA == ''):
+            # Wait for the element with the specified ID to be present in the DOM
+            ETA_element = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.ID, 'bodycontent_explbl'))
+            )
+            
+            # Once the element is present, retrieve its text
+            ETA = ETA_element.text.strip()  # Strip any leading/trailing whitespace
+            
+            if not ETA:  # Check if ETA is empty
                 ETA = None
+            
             self.quiet_batch_process_logger.info(f"ETA for connote {connote} is {ETA}")
             print(f"ETA for connote {connote} is {ETA}")
+            
             return ETA
         except Exception as err:
-            self.quiet_batch_process_logger.error(f"Error : {err}")
+            self.quiet_batch_process_logger.error(f"Error: {err}")
             return None
 
 
