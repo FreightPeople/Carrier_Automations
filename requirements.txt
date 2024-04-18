@@ -3,3 +3,4 @@ pymssql
 pandas
 webdriver-manager==3.5.2
 requests
+re

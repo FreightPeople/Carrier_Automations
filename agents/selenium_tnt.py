@@ -24,17 +24,19 @@ class SeleniumTnt:
     def open_website(self):
         try:    
             self.driver.get(self.url)
+            close_cookie_bar = WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located((By.CLASS_NAME, 'js-cookiebar-close'))
+            )
+            self.driver.execute_script("arguments[0].click();", close_cookie_bar)
         except Exception as err:
             self.quiet_batch_process_logger.error(f"Error : {err}")
     
-    def get_ETA(self,connote):
+    def get_ETA(self,connote,id):
         #content_frame = self.driver.find_element(By.CLASS_NAME, 'cookieMessageIParsys iparsys parsys')
         #self.driver.switch_to.frame(content_frame)
-        
-        close_cookie_bar = self.driver.find_element(By.CLASS_NAME, 'js-cookiebar-close')
-        self.driver.execute_script("arguments[0].click();", close_cookie_bar)
-        self.quiet_batch_process_logger.info("Closed the cookie bar")
-        time.sleep(3)
+        self.driver.get(self.url)
+
+
         try:
             # Locate the TextArea element
             connote_field = WebDriverWait(self.driver, 10).until(
@@ -55,12 +57,11 @@ class SeleniumTnt:
             # Click the 'Track' button
             track_button.click()
             print("Clicked the 'Track' button")
-            time.sleep(10)
         except Exception as e:
             print(f"Error while clicking the 'Track' button: {e}")
         try:
             # Wait for the element with the specified ID to be present in the DOM
-            ETA_element = WebDriverWait(self.driver, 20).until(
+            ETA_element = WebDriverWait(self.driver, 5).until(
                 EC.presence_of_element_located((By.ID, 'bodycontent_explbl'))
             )
             
@@ -70,10 +71,11 @@ class SeleniumTnt:
             if not ETA:  # Check if ETA is empty
                 ETA = None
             print(f"ETA for connote {connote} is {ETA}")
-            
-            return ETA
+            record = (connote, ETA,id)
+            return record
         except Exception as err:
             print(f"Error at ETA getting: {err}")
-            return None
+            record = (connote, None , id)
+            return record
 
 

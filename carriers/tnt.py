@@ -29,9 +29,8 @@ class Tnt:
         try:
             query = f"EXEC TNTActiveConsignments"
             cursor.execute(query)
-            records = [record[1] for record in cursor.fetchall()]
-
-            quiet_batch_process_logger.info(f"TNT: Records Retrieved...")
+            records = [(record[1],record[3],record[5]) for record in cursor.fetchall()]
+            #quiet_batch_process_logger.info(f"TNT: Records Retrieved...")
             print(records)
 
             return records
@@ -42,7 +41,7 @@ class Tnt:
     def close_browser(self, selenium_tnt):
         selenium_tnt.close_browser()
 
-    def get_web_ETA(self, selenium_tnt, connote):
-        eta = selenium_tnt.get_ETA(connote)
+    def get_web_ETA(self, selenium_tnt, connote, id):
+        eta = selenium_tnt.get_ETA(connote, id)
         quiet_batch_process_logger.info(f"TNT: ETA Processed...")
         return eta
