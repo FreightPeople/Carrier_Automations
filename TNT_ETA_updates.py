@@ -57,7 +57,7 @@ def update_cario_eta(record,cario_auth_token):
     payload = {
         "consignmentId": record[2],  # Replace 123 with the actual consignment ID
         "eta": eta_date_only_str,  # Replace with the desired ETA string
-        "reason": 'updated ETA based on website'  # Replace with the reason for the update   
+        "reason": f'updated ETA based on website- {eta_date_only_str}'  # Replace with the reason for the update   
     }
   
     try:
