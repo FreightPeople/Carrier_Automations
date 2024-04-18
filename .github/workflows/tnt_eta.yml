@@ -40,3 +40,7 @@ jobs:
         FMS_DATABASE: ${{ secrets.FMS_DATABASE }}
         FMS_USERNAME: ${{ secrets.FMS_USERNAME }}
         FMS_PASSWORD: ${{ secrets.FMS_PASSWORD }}
+        CARIO_USERNAME: ${{ secrets.CARIO_USERNAME }}
+        CARIO_PASSWORD: ${{ secrets.CARIO_PASSWORD }}
+        
+
