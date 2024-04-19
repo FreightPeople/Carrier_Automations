@@ -1,0 +1,48 @@
+name: Toll ETA Automation
+
+on: 
+  schedule:
+    - cron: '00 23 * * 0-4'  # Runs at 11 PM UTC, around 9-10 AM AEST depending upon DST
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use ubuntu-latest for a Linux runner
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'  # This will use the latest version of Python 3
+
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y xvfb
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Set up Firefox
+      uses: browser-actions/setup-firefox@latest
+      
+    - name: Start Xvfb
+      run: |
+        Xvfb :99 -ac &
+        echo "DISPLAY=:99" >> $GITHUB_ENV
+        
+    - name: Run Toll ETA Automation
+      run: python Toll_ETA_updates.py
+      env:
+        DISPLAY: :99
+        FMS_SERVER: ${{ secrets.FMS_SERVER }}
+        FMS_DATABASE: ${{ secrets.FMS_DATABASE }}
+        FMS_USERNAME: ${{ secrets.FMS_USERNAME }}
+        FMS_PASSWORD: ${{ secrets.FMS_PASSWORD }}
+        CARIO_USERNAME: ${{ secrets.CARIO_USERNAME }}
+        CARIO_PASSWORD: ${{ secrets.CARIO_PASSWORD }}
+        TOLL_API_USER: ${{ secrets.TOLL_API_USER }}
+        TOLL_API_PASS: ${{ secrets.TOLL_API_PASS }}
+        
+
