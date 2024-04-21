@@ -39,10 +39,12 @@ def get_toll_cons(cursor,conn):
             if business_id:
                 toll_call = toll_api_call()  
                 eta = toll_call.get_toll_eta(consignment_number, business_id)
-                eta_date = datetime.strptime(eta, "%d/%m/%Y")
+                
                 # Convert the datetime object to "mm/dd/yyyy" format
-                eta_date_mm_dd_yyyy = eta_date.strftime("%m/%d/%Y")
+                
                 if eta is not None:
+                    eta_date = datetime.strptime(eta, "%d/%m/%Y")
+                    eta_date_mm_dd_yyyy = eta_date.strftime("%m/%d/%Y")
                     print(f"ETA for consignment {consignment_number} is {eta}") 
                     cario_call.update_cario_eta(consignment_id, eta_date_mm_dd_yyyy)
                 
