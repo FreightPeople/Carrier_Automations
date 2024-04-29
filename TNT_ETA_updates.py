@@ -25,10 +25,16 @@ def initiateTntETAUpdate(cursor, conn):
             consignment_number = record[0]  # Assuming consignment number is at index 1
             print(f"Processing record {record[0]} with cario ETA of {record[1]}...")
             eta = tnt.get_web_ETA(selenium_tnt, record[0], record[2])  
-            #today_date = datetime.now().date()
+            
             if eta[1] is not None:  
-                #if(datetime.strptime(eta[1], "%d/%m/%Y %H:%M").date() != today_date) 
-                update_cario_eta(eta,cario_auth_token)
+                new_eta = datetime.strptime(eta[1], "%d/%m/%Y %H:%M").date()
+                if(record[1] is not None):
+                    old_eta = record[1].date()
+                    if new_eta != old_eta:
+                        print(f"Updating ETA for record {consignment_number} from {old_eta} to {new_eta}.")
+                        update_cario_eta(eta, cario_auth_token)
+                        continue
+                update_cario_eta(eta, cario_auth_token)        
     time.sleep(2)
 
         
