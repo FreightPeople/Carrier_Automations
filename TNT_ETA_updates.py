@@ -29,12 +29,12 @@ def initiateTntETAUpdate(cursor, conn):
             if eta[1] is not None:  
                 new_eta = datetime.strptime(eta[1], "%d/%m/%Y %H:%M").date()
                 if(record[1] is not None):
-                    old_eta = record[1].date()
+                    old_eta = record[1]
                     if new_eta != old_eta:
                         print(f"Updating ETA for record {consignment_number} from {old_eta} to {new_eta}.")
                         update_cario_eta(eta, cario_auth_token)
                         continue
-                update_cario_eta(eta, cario_auth_token)        
+                    update_cario_eta(eta, cario_auth_token)        
     time.sleep(2)
 
         
